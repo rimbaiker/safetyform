@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="en" id="html-root">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safety Club · Registration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    /* ===== RESET & GLOBAL ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --grad: linear-gradient(135deg, #009EFF 0%, #9005F3 100%);
+      --grad-soft: linear-gradient(135deg, #e6f4ff 0%, #f3e8ff 100%);
+      --blue: #009EFF;
+      --purple: #9005F3;
+      --text: #1a2233;
+      --text-muted: #6b7a94;
+      --border: #e4e9f2;
+      --surface: #ffffff;
+      --bg: #f4f6fb;
+      --easy: #10b981;
+      --medium: #f59e0b;
+      --hard: #ef4444;
+      --shadow-lg: 0 24px 60px -20px rgba(10, 14, 26, 0.25);
+      --shadow-sm: 0 4px 16px -4px rgba(10, 14, 26, 0.1);
+      --danger: #ef4444;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(at 0% 0%, rgba(0, 158, 255, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(144, 5, 243, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(0, 158, 255, 0.08) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(144, 5, 243, 0.08) 0px, transparent 50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 24px;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: font-family 0.3s;
+    }
+
+    body.lang-ar {
+      font-family: 'Cairo', 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ===== PAGE CONTAINER ===== */
+    .page-container {
+      background: var(--surface);
+      max-width: 1180px;
+      width: 100%;
+      border-radius: 32px;
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      z-index: 1;
+    }
+
+    /* ===== HERO ===== */
+    .reg-hero {
+      background: var(--grad);
+      padding: 32px 32px 44px;
+      position: relative;
+      overflow: hidden;
+      color: white;
+      text-align: center;
+    }
+
+    .reg-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.2) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 90%, rgba(255, 255, 255, 0.15) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .reg-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 34px;
+      background: var(--surface);
+      clip-path: polygon(0 100%, 100% 100%, 100% 40%, 50% 100%, 0 40%);
+    }
+
+    .reg-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reg-badge .dot {
+      width: 7px;
+      height: 7px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.3); }
+      50% { box-shadow: 0 0 0 8px rgba(74, 222, 128, 0.1); }
+    }
+
+    .reg-hero h1 {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -0.6px;
+      line-height: 1.2;
+      margin-bottom: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reg-hero p {
+      font-size: 0.9rem;
+      opacity: 0.92;
+      max-width: 460px;
+      margin: 0 auto;
+      line-height: 1.5;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== FORM BODY (GRID) ===== */
+    .form-body {
+      display: grid;
+      grid-template-columns: 1.05fr 1.25fr;
+      gap: 0;
+      padding: 0;
+      background: var(--surface);
+      min-height: 560px;
+    }
+
+    /* ===== BRAND SIDE (Slideshow + Logo) ===== */
+    .brand-side {
+      background: linear-gradient(160deg, #f9fcff 0%, #f3f0ff 100%);
+      padding: 28px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border-right: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-side::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(144, 5, 243, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .brand-side::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(0, 158, 255, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* ---- Logo (kept) ---- */
+    .logo-card {
+      background: white;
+      border-radius: 20px;
+      padding: 12px;
+      box-shadow: 0 16px 32px -12px rgba(144, 5, 243, 0.3);
+      border: 1px solid var(--border);
+      display: inline-block;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo-card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .logo-card img {
+      display: block;
+      max-width: 100px;
+      width: 100%;
+      border-radius: 14px;
+    }
+
+    .brand-side h2 {
+      font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-side .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== SLIDESHOW ===== */
+    .slideshow-card {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      aspect-ratio: 4 / 3;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px -15px rgba(144, 5, 243, 0.3);
+      border: 1px solid var(--border);
+      background: #fff;
+      margin-bottom: 18px;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 2;
+    }
+
+    .slideshow-card:hover {
+      transform: translateY(-4px) scale(1.01);
+    }
+
+    .slideshow-track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.7s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* dots */
+    .slideshow-dots {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 3;
+    }
+
+    .slideshow-dots .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+      padding: 0;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .slideshow-dots .dot.active {
+      background: #fff;
+      width: 18px;
+      border-radius: 100px;
+    }
+
+    /* nav arrows */
+    .slideshow-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s, background 0.3s;
+      color: #1a2233;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .slideshow-card:hover .slideshow-arrow {
+      opacity: 1;
+    }
+
+    .slideshow-arrow:hover {
+      background: #fff;
+    }
+
+    .slideshow-arrow.prev { left: 8px; }
+    .slideshow-arrow.next { right: 8px; }
+
+    .slideshow-arrow .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    /* progress bar */
+    .slideshow-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.3);
+      z-index: 3;
+    }
+
+    .slideshow-progress-bar {
+      height: 100%;
+      background: #fff;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    /* ---- Lang switch ---- */
+    .lang-switch {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: auto;
+      padding-top: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .lang-btn {
+      padding: 5px 12px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border);
+      background: white;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .lang-btn.active {
+      background: var(--grad);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 6px 16px -6px rgba(144, 5, 243, 0.4);
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: #a78bfa;
+      color: #9005F3;
+    }
+
+    /* ===== FORM SIDE (redesigned as multi-step) ===== */
+    .form-side {
+      padding: 28px 32px 26px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--surface);
+    }
+
+    .form-header {
+      margin-bottom: 18px;
+    }
+
+    .form-header h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-bottom: 3px;
+    }
+
+    .form-header p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ---- Step indicator ---- */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .step-indicator::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      right: 20px;
+      height: 2px;
+      background: var(--border);
+      z-index: 0;
+    }
+
+    .step-indicator .step-progress {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      height: 2px;
+      background: var(--grad);
+      z-index: 1;
+      transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      width: 0%;
+    }
+
+    .step-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fff;
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+
+    .step-item.active .step-circle {
+      background: var(--grad);
+      border-color: transparent;
+      color: #fff;
+      box-shadow: 0 6px 16px -4px rgba(144, 5, 243, 0.5);
+      transform: scale(1.08);
+    }
+
+    .step-item.completed .step-circle {
+      background: var(--easy);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .step-item.completed .step-circle .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .step-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 0.3s;
+      text-align: center;
+    }
+
+    .step-item.active .step-label {
+      color: var(--purple);
+    }
+
+    .step-item.completed .step-label {
+      color: var(--easy);
+    }
+
+    /* ---- Step panels ---- */
+    .step-panels {
+      flex: 1;
+      position: relative;
+    }
+
+    .step-panel {
+      display: none;
+      animation: fadeSlideIn 0.4s ease;
+    }
+
+    .step-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* ---- Form grid ---- */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      position: relative;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .form-group label .req {
+      color: var(--danger);
+      font-size: 0.9rem;
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrap .field-icon {
+      position: absolute;
+      left: 12px;
+      font-size: 18px;
+      color: #94a3b8;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    body.lang-ar .input-wrap .field-icon {
+      left: auto;
+      right: 12px;
+    }
+
+    .input-wrap input,
+    .input-wrap select,
+    .input-wrap textarea {
+      width: 100%;
+      padding: 11px 12px 11px 40px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text);
+      background: #f8fafc;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.2s;
+      appearance: none;
+    }
+
+    body.lang-ar .input-wrap input,
+    body.lang-ar .input-wrap select,
+    body.lang-ar .input-wrap textarea {
+      padding: 11px 40px 11px 12px;
+      text-align: right;
+    }
+
+    .input-wrap textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .input-wrap select {
+      cursor: pointer;
+    }
+
+    .input-wrap input:focus,
+    .input-wrap select:focus,
+    .input-wrap textarea:focus {
+      border-color: #a78bfa;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(144, 5, 243, 0.1);
+    }
+
+    .input-wrap:focus-within .field-icon {
+      color: #9005F3;
+    }
+
+    .form-group.error input,
+    .form-group.error select,
+    .form-group.error textarea {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .form-group.error .field-icon {
+      color: var(--danger);
+    }
+
+    .error-msg {
+      font-size: 0.68rem;
+      color: var(--danger);
+      font-weight: 600;
+      margin-top: 1px;
+      display: none;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .form-group.error .error-msg {
+      display: flex;
+    }
+
+    /* ---- Step navigation buttons ---- */
+    .step-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      flex: 1;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 13px 24px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.25s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+    }
+
+    .btn-back {
+      background: #fff;
+      color: var(--text-muted);
+      border: 2px solid var(--border);
+      flex: 0 0 auto;
+      padding: 13px 20px;
+    }
+
+    .btn-back:hover {
+      border-color: #a78bfa;
+      color: var(--purple);
+    }
+
+    .btn-next {
+      background: var(--grad);
+      color: white;
+      box-shadow: 0 12px 24px -8px rgba(144, 5, 243, 0.5);
+    }
+
+    .btn-next:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px -8px rgba(144, 5, 243, 0.6);
+    }
+
+    .btn-next:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    .btn-submit {
+      background: var(--grad);
+      color: white;
+      box-shadow: 0 12px 24px -8px rgba(144, 5, 243, 0.5);
+      width: 100%;
+    }
+
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 32px -8px rgba(144, 5, 243, 0.6);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
+
+    /* ---- Summary (step 4) ---- */
+    .summary-card {
+      background: linear-gradient(135deg, #f9fcff 0%, #f3f0ff 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 8px;
+    }
+
+    .summary-title {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 0.8rem;
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .summary-value {
+      color: var(--text);
+      font-weight: 700;
+      text-align: right;
+      max-width: 60%;
+      word-break: break-word;
+    }
+
+    /* ---- Footer note ---- */
+    .form-footer-note {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding-top: 14px;
+      margin-top: 14px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #0f172a;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+      max-width: 90vw;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast .toast-icon {
+      color: #4ade80;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ===== PRELOADER ===== */
+    .preloader {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.92);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(4px);
+    }
+
+    .preloader.show {
+      display: flex;
+    }
+
+    .preloader-spinner {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 4px solid #e4e9f2;
+      border-top-color: #9005F3;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===== SCREEN TRANSITION ANIMATION ===== */
+    .animation {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .animation_title01_wrap,
+    .animation_title02_wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      width: 100%;
+      text-align: center;
+    }
+
+    .animation_title01 {
+      font-family: 'Orbitron', 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(2rem, 7vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: white;
+      text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35), 0 0 60px rgba(0, 158, 255, 0.4);
+      opacity: 0;
+      animation: titleFadeIn 0.8s ease forwards;
+      animation-delay: 0.15s;
+    }
+
+    @keyframes titleFadeIn {
+      to { opacity: 1; }
+    }
+
+    .animation_bg01,
+    .animation_bg02,
+    .animation_bg03,
+    .animation_bg04,
+    .animation_bg05,
+    .animation_bg06,
+    .animation_bg07,
+    .animation_bg08,
+    .animation_bg09,
+    .animation_bg10,
+    .animation_bg11,
+    .animation_bg12,
+    .animation_bg13,
+    .animation_bg14,
+    .animation_bg15,
+    .animation_bg16,
+    .animation_bg17,
+    .animation_bg18,
+    .animation_bg19,
+    .animation_bg20,
+    .animation_bg21,
+    .animation_bg22,
+    .animation_bg23,
+    .animation_bg24,
+    .animation_bg25,
+    .animation_bg26,
+    .animation_bg27,
+    .animation_bg28,
+    .animation_bg29,
+    .animation_bg30,
+    .animation_bg31,
+    .animation_bg32,
+    .animation_bg33,
+    .animation_bg34,
+    .animation_bg35,
+    .animation_bg36,
+    .animation_bg37,
+    .animation_bg38,
+    .animation_bg39,
+    .animation_bg40,
+    .animation_bg41,
+    .animation_bg42,
+    .animation_bg43 {
+      position: absolute;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .animation_bg01 {
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 100vh;
+      transform: translate(-50%, -50%) scale(0);
+      background: var(--grad);
+      border-radius: 0;
+      z-index: 1;
+      animation: growCenter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes growCenter {
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .animation_common_bg01 { width: 25vw; height: 25vh; }
+    .animation_common_bg02 { width: 25vw; height: 25vh; }
+    .animation_common_bg03 { width: 20vw; height: 50vh; }
+    .animation_common_bg04 { width: 20vw; height: 50vh; }
+    .animation_common_bg05 { width: 20vw; height: 25vh; }
+    .animation_common_bg06 { width: 20vw; height: 25vh; }
+    .animation_common_bg07 { width: 20vw; height: 25vh; }
+    .animation_common_bg08 { width: 20vw; height: 25vh; }
+    .animation_common_bg09 { width: 12.5vw; height: 25vh; }
+    .animation_common_bg10 { width: 12.5vw; height: 25vh; }
+
+    .animation_common_bg01 { background: linear-gradient(135deg, #009EFF, #9005F3); }
+    .animation_common_bg02 { background: linear-gradient(135deg, #9005F3, #009EFF); }
+    .animation_common_bg03 { background: linear-gradient(180deg, #009EFF, #9005F3); }
+    .animation_common_bg04 { background: linear-gradient(180deg, #9005F3, #009EFF); }
+    .animation_common_bg05 { background: linear-gradient(90deg, #009EFF, #9005F3); }
+    .animation_common_bg06 { background: linear-gradient(90deg, #9005F3, #009EFF); }
+    .animation_common_bg07 { background: linear-gradient(135deg, #1EA8FF, #A020F0); }
+    .animation_common_bg08 { background: linear-gradient(135deg, #A020F0, #1EA8FF); }
+    .animation_common_bg09 { background: linear-gradient(180deg, #1EA8FF, #A020F0); }
+    .animation_common_bg10 { background: linear-gradient(180deg, #A020F0, #1EA8FF); }
+
+    .animation_bg02 { top: 0; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.10s; }
+    .animation_bg03 { top: 0; left: 25vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.12s; }
+    .animation_bg04 { top: 0; left: 50vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.14s; }
+    .animation_bg05 { top: 0; left: 75vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.16s; }
+    .animation_bg06 { top: 25vh; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.18s; }
+    .animation_bg07 { top: 25vh; left: 25vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.20s; }
+    .animation_bg08 { top: 25vh; left: 50vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.22s; }
+    .animation_bg09 { top: 25vh; left: 75vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.24s; }
+    .animation_bg10 { top: 0; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.26s; }
+    .animation_bg11 { top: 0; left: 20vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.28s; }
+    .animation_bg12 { top: 0; left: 40vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.30s; }
+    .animation_bg13 { top: 0; left: 60vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.32s; }
+    .animation_bg14 { top: 0; left: 80vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.34s; }
+    .animation_bg15 { top: 50vh; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.36s; }
+    .animation_bg16 { top: 50vh; left: 20vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.38s; }
+    .animation_bg17 { top: 50vh; left: 40vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.40s; }
+    .animation_bg18 { top: 0; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.42s; }
+    .animation_bg19 { top: 0; left: 20vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.44s; }
+    .animation_bg20 { top: 0; left: 40vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.46s; }
+    .animation_bg21 { top: 0; left: 60vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.48s; }
+    .animation_bg22 { top: 0; left: 80vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.50s; }
+    .animation_bg23 { top: 75vh; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.52s; }
+    .animation_bg24 { top: 75vh; left: 20vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.54s; }
+    .animation_bg25 { top: 75vh; left: 40vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.56s; }
+    .animation_bg26 { top: 75vh; left: 60vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.58s; }
+    .animation_bg27 { top: 0; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.60s; }
+    .animation_bg28 { top: 0; left: 20vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.62s; }
+    .animation_bg29 { top: 0; left: 40vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.64s; }
+    .animation_bg30 { top: 0; left: 60vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.66s; }
+    .animation_bg31 { top: 0; left: 80vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.68s; }
+    .animation_bg32 { top: 25vh; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.70s; }
+    .animation_bg33 { top: 25vh; left: 20vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.72s; }
+    .animation_bg34 { top: 25vh; left: 40vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.74s; }
+    .animation_bg35 { top: 25vh; left: 60vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.76s; }
+    .animation_bg36 { top: 0; left: 0; animation: tileIn 0.5s ease forwards; animation-delay: 0.78s; }
+    .animation_bg37 { top: 0; left: 12.5vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.80s; }
+    .animation_bg38 { top: 0; left: 25vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.82s; }
+    .animation_bg39 { top: 0; left: 37.5vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.84s; }
+    .animation_bg40 { top: 0; left: 50vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.86s; }
+    .animation_bg41 { top: 0; left: 62.5vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.88s; }
+    .animation_bg42 { top: 0; left: 75vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.90s; }
+    .animation_bg43 { top: 0; left: 87.5vw; animation: tileIn 0.5s ease forwards; animation-delay: 0.92s; }
+
+    @keyframes tileIn {
+      0% { opacity: 0; transform: scale(0); }
+      70% { opacity: 1; transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .animation {
+      animation: fadeOutOverlay 1s ease forwards;
+      animation-delay: 2.2s;
+    }
+
+    @keyframes fadeOutOverlay {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    /* ===== RTL SUPPORT ===== */
+    body.lang-ar .brand-side {
+      border-right: none;
+      border-left: 1px solid var(--border);
+    }
+
+    body.lang-ar .form-header h3,
+    body.lang-ar .form-header p,
+    body.lang-ar .form-group label,
+    body.lang-ar .form-footer-note,
+    body.lang-ar .brand-side,
+    body.lang-ar .reg-hero {
+      text-align: right;
+    }
+
+    body.lang-ar .form-footer-note {
+      justify-content: flex-start;
+    }
+
+    body.lang-ar .reg-hero h1,
+    body.lang-ar .reg-hero p,
+    body.lang-ar .reg-badge {
+      text-align: center;
+    }
+
+    body.lang-ar .brand-side h2,
+    body.lang-ar .brand-side .brand-sub {
+      text-align: center;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 960px) {
+      .form-body {
+        grid-template-columns: 1fr;
+      }
+      .brand-side {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 26px 22px;
+      }
+      body.lang-ar .brand-side {
+        border-left: none;
+      }
+      .slideshow-card {
+        max-width: 320px;
+      }
+      .logo-card img {
+        max-width: 90px;
+      }
+      .form-side {
+        padding: 26px 24px 24px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+      .page-container {
+        border-radius: 22px;
+      }
+      .reg-hero {
+        padding: 24px 18px 36px;
+      }
+      .form-side {
+        padding: 22px 16px 20px;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .form-header h3 {
+        font-size: 1.1rem;
+      }
+      .brand-side {
+        padding: 22px 16px;
+      }
+      .lang-switch {
+        margin-top: 12px;
+        padding-top: 0;
+      }
+      .slideshow-card {
+        max-width: 280px;
+      }
+      .logo-card img {
+        max-width: 80px;
+      }
+      .step-label {
+        font-size: 0.58rem;
+      }
+      .step-circle {
+        width: 28px;
+        height: 28px;
+        font-size: 0.68rem;
+      }
+      .btn {
+        padding: 12px 18px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<!-- ===== SCREEN TRANSITION ANIMATION ===== -->
+<div class="animation">
+  <div class="animation_title01_wrap">
+    <h2 class="animation_title01" id="span">Safety Club</h2>
+  </div>
+  <div class="animation_title02_wrap"></div>
+  <div class="animation_bg01"></div>
+  <div class="animation_bg02 animation_common_bg01"></div>
+  <div class="animation_bg03 animation_common_bg01"></div>
+  <div class="animation_bg04 animation_common_bg01"></div>
+  <div class="animation_bg05 animation_common_bg01"></div>
+  <div class="animation_bg06 animation_common_bg02"></div>
+  <div class="animation_bg07 animation_common_bg02"></div>
+  <div class="animation_bg08 animation_common_bg02"></div>
+  <div class="animation_bg09 animation_common_bg02"></div>
+  <div class="animation_bg10 animation_common_bg03"></div>
+  <div class="animation_bg11 animation_common_bg04"></div>
+  <div class="animation_bg12 animation_common_bg03"></div>
+  <div class="animation_bg13 animation_common_bg04"></div>
+  <div class="animation_bg14 animation_common_bg03"></div>
+  <div class="animation_bg15 animation_common_bg04"></div>
+  <div class="animation_bg16 animation_common_bg03"></div>
+  <div class="animation_bg17 animation_common_bg04"></div>
+  <div class="animation_bg18 animation_common_bg05"></div>
+  <div class="animation_bg19 animation_common_bg05"></div>
+  <div class="animation_bg20 animation_common_bg05"></div>
+  <div class="animation_bg21 animation_common_bg05"></div>
+  <div class="animation_bg22 animation_common_bg05"></div>
+  <div class="animation_bg23 animation_common_bg06"></div>
+  <div class="animation_bg24 animation_common_bg06"></div>
+  <div class="animation_bg25 animation_common_bg06"></div>
+  <div class="animation_bg26 animation_common_bg06"></div>
+  <div class="animation_bg27 animation_common_bg07"></div>
+  <div class="animation_bg28 animation_common_bg07"></div>
+  <div class="animation_bg29 animation_common_bg07"></div>
+  <div class="animation_bg30 animation_common_bg07"></div>
+  <div class="animation_bg31 animation_common_bg07"></div>
+  <div class="animation_bg32 animation_common_bg08"></div>
+  <div class="animation_bg33 animation_common_bg08"></div>
+  <div class="animation_bg34 animation_common_bg08"></div>
+  <div class="animation_bg35 animation_common_bg08"></div>
+  <div class="animation_bg36 animation_common_bg09"></div>
+  <div class="animation_bg37 animation_common_bg10"></div>
+  <div class="animation_bg38 animation_common_bg09"></div>
+  <div class="animation_bg39 animation_common_bg10"></div>
+  <div class="animation_bg40 animation_common_bg09"></div>
+  <div class="animation_bg41 animation_common_bg10"></div>
+  <div class="animation_bg42 animation_common_bg09"></div>
+  <div class="animation_bg43 animation_common_bg10"></div>
+</div>
+
+<div class="page-container" id="pageContainer">
+  <!-- ===== HERO ===== -->
+  <div class="reg-hero">
+    <div class="reg-badge"><span class="dot"></span> <span data-i18n="badge">Safety Club</span></div>
+    <h1 data-i18n="heroTitle">Join the Safety Community</h1>
+    <p data-i18n="heroSubtitle">Fill in your details to get started.</p>
+  </div>
+
+  <!-- ===== BODY ===== -->
+  <div class="form-body">
+    <!-- ===== BRAND SIDE (Logo + Slideshow) ===== -->
+    <div class="brand-side">
+      <!-- Logo (kept) -->
+      <div class="logo-card">
+        <img src="https://i.ibb.co/YBLV7b3v/safetyc.png" alt="Safety Club Logo">
+      </div>
+
+      <h2 data-i18n="brandName">Safety Club</h2>
+      <p class="brand-sub" data-i18n="brandSub">Stay informed, stay protected.</p>
+
+      <!-- Slideshow -->
+      <div class="slideshow-card" id="slideshow">
+        <div class="slideshow-track" id="slideshowTrack">
+          <div class="slide active"><img src="https://i.ibb.co/SwDHTwq8/photo-2026-10-15-19-30-14.jpg" alt="Safety Club photo 1"></div>
+          <div class="slide"><img src="https://i.ibb.co/DPz0h5d6/photo-2026-10-15-19-30-41.jpg" alt="Safety Club photo 2"></div>
+          <div class="slide"><img src="https://i.ibb.co/F45W0Rwm/photo-2026-10-15-19-30-50.jpg" alt="Safety Club photo 3"></div>
+          <div class="slide"><img src="https://i.ibb.co/9m1WdhTD/photo-2026-10-15-19-31-11.jpg" alt="Safety Club photo 4"></div>
+          <div class="slide"><img src="https://i.ibb.co/B2ZVxjpW/photo-2026-10-15-19-31-20.jpg" alt="Safety Club photo 5"></div>
+          <div class="slide"><img src="https://i.ibb.co/tMXp9FRn/photo-2026-10-15-19-31-52.jpg" alt="Safety Club photo 6"></div>
+          <div class="slide"><img src="https://i.ibb.co/nWT6pc1/photo-2026-10-15-19-31-45.jpg" alt="Safety Club photo 7"></div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="slideshow-progress">
+          <div class="slideshow-progress-bar" id="slideshowProgress"></div>
+        </div>
+
+        <!-- Arrows -->
+        <button class="slideshow-arrow prev" id="slidePrev" aria-label="Previous slide">
+          <span class="material-symbols-outlined">chevron_left</span>
+        </button>
+        <button class="slideshow-arrow next" id="slideNext" aria-label="Next slide">
+          <span class="material-symbols-outlined">chevron_right</span>
+        </button>
+
+        <!-- Dots -->
+        <div class="slideshow-dots" id="slideshowDots"></div>
+      </div>
+
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fr">FR</button>
+        <button class="lang-btn" data-lang="ar">AR</button>
+      </div>
+    </div>
+
+    <!-- ===== FORM SIDE (Multi-step Wizard) ===== -->
+    <div class="form-side">
+      <div class="form-header">
+        <h3 data-i18n="formTitle">Registration Form</h3>
+        <p><span data-i18n="formSubtitle">All fields marked with</span> <span style="color:var(--danger);font-weight:700;">*</span> <span data-i18n="formSubtitleEnd">are required.</span></p>
+      </div>
+
+      <!-- Step indicator -->
+      <div class="step-indicator" id="stepIndicator">
+        <div class="step-progress" id="stepProgress"></div>
+        <div class="step-item active" data-step="1">
+          <div class="step-circle"><span>1</span></div>
+          <span class="step-label" data-i18n="stepPersonal">Personal</span>
+        </div>
+        <div class="step-item" data-step="2">
+          <div class="step-circle"><span>2</span></div>
+          <span class="step-label" data-i18n="stepContact">Contact</span>
+        </div>
+        <div class="step-item" data-step="3">
+          <div class="step-circle"><span>3</span></div>
+          <span class="step-label" data-i18n="stepDetails">Details</span>
+        </div>
+        <div class="step-item" data-step="4">
+          <div class="step-circle"><span>4</span></div>
+          <span class="step-label" data-i18n="stepConfirm">Confirm</span>
+        </div>
+      </div>
+
+      <form id="signup-form" novalidate>
+        <!-- Hidden inputs to keep form data accessible -->
+        <input type="hidden" id="firstName" name="firstName">
+        <input type="hidden" id="familyName" name="familyName">
+        <input type="hidden" id="email" name="email">
+        <input type="hidden" id="phone" name="phone">
+        <input type="hidden" id="major" name="major">
+        <input type="hidden" id="level" name="level">
+        <input type="hidden" id="dob" name="dob">
+        <input type="hidden" id="gender" name="gender">
+
+        <div class="step-panels">
+          <!-- ===== STEP 1: Personal ===== -->
+          <div class="step-panel active" data-step="1">
+            <div class="form-grid">
+              <div class="form-group" id="groupFirstName">
+                <label for="firstNameInput"><span data-i18n="firstName">First Name</span> <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">person</span>
+                  <input type="text" id="firstNameInput" data-target="firstName" autocomplete="given-name">
+                </div>
+                <span class="error-msg"><span class="material-symbols-outlined" style="font-size:14px;">error</span> <span data-i18n="errFirstName">First name is required</span></span>
+              </div>
+
+              <div class="form-group" id="groupFamilyName">
+                <label for="familyNameInput"><span data-i18n="familyName">Family Name</span> <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">badge</span>
+                  <input type="text" id="familyNameInput" data-target="familyName" autocomplete="family-name">
+                </div>
+                <span class="error-msg"><span class="material-symbols-outlined" style="font-size:14px;">error</span> <span data-i18n="errFamilyName">Family name is required</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== STEP 2: Contact ===== -->
+          <div class="step-panel" data-step="2">
+            <div class="form-grid">
+              <div class="form-group" id="groupEmail">
+                <label for="emailInput"><span data-i18n="email">Email</span> <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">mail</span>
+                  <input type="email" id="emailInput" data-target="email" autocomplete="email">
+                </div>
+                <span class="error-msg"><span class="material-symbols-outlined" style="font-size:14px;">error</span> <span data-i18n="errEmail">Valid email is required</span></span>
+              </div>
+
+              <div class="form-group" id="groupPhone">
+                <label for="phoneInput"><span data-i18n="phone">Phone Number</span> <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">call</span>
+                  <input type="tel" id="phoneInput" data-target="phone" autocomplete="tel">
+                </div>
+                <span class="error-msg"><span class="material-symbols-outlined" style="font-size:14px;">error</span> <span data-i18n="errPhone">Phone number is required</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== STEP 3: Details ===== -->
+          <div class="step-panel" data-step="3">
+            <div class="form-grid">
+              <div class="form-group" id="groupMajor">
+                <label for="majorInput" data-i18n="major">Major</label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">school</span>
+                  <input type="text" id="majorInput" data-target="major">
+                </div>
+              </div>
+
+              <div class="form-group" id="groupLevel">
+                <label for="levelInput" data-i18n="level">Level</label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">stairs</span>
+                  <input type="text" id="levelInput" data-target="level" placeholder="e.g., 1, 2, 3…">
+                </div>
+              </div>
+
+              <div class="form-group" id="groupDob">
+                <label for="dobInput" data-i18n="dob">Date of Birth</label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">calendar_month</span>
+                  <input type="date" id="dobInput" data-target="dob">
+                </div>
+              </div>
+
+              <div class="form-group" id="groupGender">
+                <label for="genderInput" data-i18n="gender">Gender</label>
+                <div class="input-wrap">
+                  <span class="material-symbols-outlined field-icon">wc</span>
+                  <select id="genderInput" data-target="gender">
+                    <option value="" data-i18n="genderSelect">Select…</option>
+                    <option value="male" data-i18n="genderMale">Male</option>
+                    <option value="female" data-i18n="genderFemale">Female</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== STEP 4: Confirm ===== -->
+          <div class="step-panel" data-step="4">
+            <div class="summary-card">
+              <div class="summary-title">
+                <span class="material-symbols-outlined" style="font-size:18px;color:var(--purple);">fact_check</span>
+                <span data-i18n="summaryTitle">Please review your information</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="firstName">First Name</span>
+                <span class="summary-value" id="summaryFirstName">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="familyName">Family Name</span>
+                <span class="summary-value" id="summaryFamilyName">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="email">Email</span>
+                <span class="summary-value" id="summaryEmail">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="phone">Phone Number</span>
+                <span class="summary-value" id="summaryPhone">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="major">Major</span>
+                <span class="summary-value" id="summaryMajor">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="level">Level</span>
+                <span class="summary-value" id="summaryLevel">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="dob">Date of Birth</span>
+                <span class="summary-value" id="summaryDob">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="summary-label" data-i18n="gender">Gender</span>
+                <span class="summary-value" id="summaryGender">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step navigation -->
+        <div class="step-nav">
+          <button type="button" class="btn btn-back hidden" id="backBtn">
+            <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span>
+            <span data-i18n="backBtn">Back</span>
+          </button>
+          <button type="button" class="btn btn-next" id="nextBtn">
+            <span data-i18n="nextBtn">Next</span>
+            <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+          </button>
+          <button type="submit" class="btn btn-submit hidden" id="submitBtn">
+            <span data-i18n="submitBtn">Submit Application</span>
+            <span class="material-symbols-outlined" style="font-size:18px;">check</span>
+          </button>
+        </div>
+
+        <div class="form-footer-note">
+          <span class="material-symbols-outlined" style="font-size:15px;">lock</span>
+          <span data-i18n="footerNote">Your information is stored securely and never shared.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="material-symbols-outlined toast-icon">check_circle</span>
+  <span id="toastText">Welcome aboard!</span>
+</div>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-spinner"></div>
+</div>
+
+<!-- ===== SUPABASE CONFIG ===== -->
+<script>
+  window.SUPABASE_URL = 'https://oaacdyhreltumdbzdhna.supabase.co';
+  window.SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hYWNkeWhyZWx0dW1kYnpkaG5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMDIwNzUsImV4cCI6MjEwNzU3ODA3NX0.AnCBF2InhO27BmLxU65S7iemaQ_Z-_vvFn1spjoqk6I';
+  window.SUPABASE_TABLE = 'applications';
+</script>
+
+<!-- ===== PARTICLE BACKGROUND (three.js) ===== -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+  import { Line2 } from 'three/addons/lines/Line2.js';
+  import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+  import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+
+  let scene, camera, renderer, composer, particles, energyLines = [];
+  const mouse = new THREE.Vector2(10000, 10000);
+  let particleData = [];
+
+  function initParticles() {
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 50);
+    const canvas = document.getElementById('bg-canvas');
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0);
+    composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    composer.addPass(new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight), 0.9, 0.6, 0.05
+    ));
+    createMainParticles();
+    createEnergyLines();
+    window.addEventListener('resize', onParticleResize);
+    window.addEventListener('mousemove', onParticleMouseMove);
+  }
+
+  function createMainParticles() {
+    const particleCount = 15000;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const baseColor = new THREE.Color(0x0a1a3a);
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+      const x = (Math.random() - 0.5) * 120;
+      const y = (Math.random() - 0.5) * 120;
+      particleData.push({
+        originalPos: new THREE.Vector3(x, y, (Math.random() - 0.5) * 20),
+        currentPos: new THREE.Vector3(x, y, (Math.random() - 0.5) * 20),
+        velocity: new THREE.Vector3(),
+      });
+      positions[i3] = x;
+      positions[i3 + 1] = y;
+      positions[i3 + 2] = particleData[i].originalPos.z;
+      baseColor.toArray(colors, i3);
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const material = new THREE.PointsMaterial({
+      size: 1.5, vertexColors: true, transparent: true,
+      blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+    });
+    particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+  }
+
+  function createEnergyLines() {
+    const lineCount = 30;
+    const lineColors = [0x009EFF, 0x9005F3];
+    for (let i = 0; i < lineCount; i++) {
+      const geometry = new LineGeometry();
+      const points = [];
+      const z = (Math.random() - 0.5) * 150 - 75;
+      const startX = (Math.random() - 0.5) * 150;
+      const startY = (Math.random() - 0.5) * 150;
+      const length = Math.random() * 10 + 5;
+      points.push(startX, startY, z);
+      points.push(startX, startY - length, z);
+      geometry.setPositions(points);
+      const material = new LineMaterial({
+        color: lineColors[i % 2], linewidth: 0.003,
+        transparent: true, opacity: 0.55, dashed: false,
+      });
+      const line = new Line2(geometry, material);
+      line.userData.speed = Math.random() * 30 + 15;
+      line.userData.originalZ = z;
+      energyLines.push(line);
+      scene.add(line);
+    }
+  }
+
+  function onParticleResize() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+    composer.setSize(width, height);
+    energyLines.forEach(line => line.material.resolution.set(width, height));
+  }
+
+  function onParticleMouseMove(event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  const clock = new THREE.Clock();
+
+  function animateParticles() {
+    const delta = clock.getDelta();
+    const elapsedTime = clock.getElapsedTime();
+    requestAnimationFrame(animateParticles);
+    const mousePos3D = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+    mousePos3D.unproject(camera);
+    const dir = mousePos3D.sub(camera.position).normalize();
+    const distance = -camera.position.z / dir.z;
+    const finalMousePos = camera.position.clone().add(dir.multiplyScalar(distance));
+    const positions = particles.geometry.attributes.position.array;
+    const colors = particles.geometry.attributes.color.array;
+    const highlightBlue = new THREE.Color(0x009EFF);
+    const highlightPurple = new THREE.Color(0x9005F3);
+    for (let i = 0; i < particleData.length; i++) {
+      const i3 = i * 3;
+      const data = particleData[i];
+      const diff = new THREE.Vector3().subVectors(data.currentPos, finalMousePos);
+      const dist = diff.length();
+      let force = 0;
+      if (dist < 20) {
+        force = (1 - (dist / 20)) * 0.1;
+        diff.normalize();
+        data.velocity.add(diff.multiplyScalar(force));
+      }
+      const springForce = new THREE.Vector3().subVectors(data.originalPos, data.currentPos).multiplyScalar(0.01);
+      data.velocity.add(springForce);
+      data.velocity.multiplyScalar(0.92);
+      data.currentPos.add(data.velocity);
+      positions[i3] = data.currentPos.x;
+      positions[i3 + 1] = data.currentPos.y;
+      positions[i3 + 2] = data.currentPos.z + Math.sin(data.originalPos.x * 0.1 + elapsedTime) * 5.0;
+      let colorMix = dist < 20 ? (1 - dist / 20) : 0;
+      const highlightColor = (i % 2 === 0) ? highlightBlue : highlightPurple;
+      const base = new THREE.Color(0x0a1a3a);
+      const color = base.lerp(highlightColor, colorMix * 0.9);
+      color.toArray(colors, i3);
+    }
+    particles.geometry.attributes.position.needsUpdate = true;
+    particles.geometry.attributes.color.needsUpdate = true;
+    energyLines.forEach(line => {
+      line.position.z = (line.position.z + line.userData.speed * delta);
+      if (line.position.z > 50) line.position.z = -150;
+    });
+    composer.render();
+  }
+
+  initParticles();
+  animateParticles();
+</script>
+
+<!-- ===== TRANSLATIONS ===== -->
+<script>
+window.HSE_TRANSLATIONS = {
+  en: {
+    badge: 'Safety Club',
+    heroTitle: 'Join the Safety Community',
+    heroSubtitle: 'Fill in your details to get started.',
+    brandName: 'Safety Club',
+    brandSub: 'Stay informed, stay protected.',
+    formTitle: 'Registration Form',
+    formSubtitle: 'All fields marked with',
+    formSubtitleEnd: 'are required.',
+    stepPersonal: 'Personal',
+    stepContact: 'Contact',
+    stepDetails: 'Details',
+    stepConfirm: 'Confirm',
+    firstName: 'First Name',
+    familyName: 'Family Name',
+    email: 'Email',
+    phone: 'Phone Number',
+    major: 'Major',
+    level: 'Level',
+    dob: 'Date of Birth',
+    gender: 'Gender',
+    genderSelect: 'Select…',
+    genderMale: 'Male',
+    genderFemale: 'Female',
+    backBtn: 'Back',
+    nextBtn: 'Next',
+    submitBtn: 'Submit Application',
+    summaryTitle: 'Please review your information',
+    footerNote: 'Your information is stored securely and never shared.',
+    errFirstName: 'First name is required',
+    errFamilyName: 'Family name is required',
+    errEmail: 'Valid email is required',
+    errPhone: 'Phone number is required',
+    toastRequired: 'Please fill in all required fields correctly',
+    toastSuccess: 'Registration submitted successfully! Welcome, ',
+    toastError: 'Could not save your application. Please try again.'
+  },
+  fr: {
+    badge: 'Safety Club',
+    heroTitle: 'Rejoignez la communauté Safety',
+    heroSubtitle: 'Remplissez vos informations pour commencer.',
+    brandName: 'Safety Club',
+    brandSub: 'Restez informé, restez protégé.',
+    formTitle: 'Formulaire d\'inscription',
+    formSubtitle: 'Tous les champs marqués d\'un',
+    formSubtitleEnd: 'sont obligatoires.',
+    stepPersonal: 'Personnel',
+    stepContact: 'Contact',
+    stepDetails: 'Détails',
+    stepConfirm: 'Confirmer',
+    firstName: 'Prénom',
+    familyName: 'Nom de famille',
+    email: 'E-mail',
+    phone: 'Numéro de téléphone',
+    major: 'Filière',
+    level: 'Niveau',
+    dob: 'Date de naissance',
+    gender: 'Genre',
+    genderSelect: 'Sélectionner…',
+    genderMale: 'Homme',
+    genderFemale: 'Femme',
+    backBtn: 'Retour',
+    nextBtn: 'Suivant',
+    submitBtn: 'Envoyer la candidature',
+    summaryTitle: 'Veuillez vérifier vos informations',
+    footerNote: 'Vos informations sont stockées en toute sécurité et ne sont jamais partagées.',
+    errFirstName: 'Le prénom est requis',
+    errFamilyName: 'Le nom de famille est requis',
+    errEmail: 'Un e-mail valide est requis',
+    errPhone: 'Le numéro de téléphone est requis',
+    toastRequired: 'Veuillez remplir correctement tous les champs obligatoires',
+    toastSuccess: 'Inscription envoyée avec succès ! Bienvenue, ',
+    toastError: 'Impossible d\'enregistrer votre candidature. Veuillez réessayer.'
+  },
+  ar: {
+    badge: 'نادي السلامة',
+    heroTitle: 'انضم إلى مجتمع السلامة',
+    heroSubtitle: 'املأ بياناتك للبدء.',
+    brandName: 'نادي السلامة',
+    brandSub: 'ابقَ على اطلاع، ابقَ محميًا.',
+    formTitle: 'استمارة التسجيل',
+    formSubtitle: 'جميع الحقول المميزة بـ',
+    formSubtitleEnd: 'مطلوبة.',
+    stepPersonal: 'شخصي',
+    stepContact: 'اتصال',
+    stepDetails: 'تفاصيل',
+    stepConfirm: 'تأكيد',
+    firstName: 'الاسم الأول',
+    familyName: 'اسم العائلة',
+    email: 'البريد الإلكتروني',
+    phone: 'رقم الهاتف',
+    major: 'التخصص',
+    level: 'المستوى',
+    dob: 'تاريخ الميلاد',
+    gender: 'الجنس',
+    genderSelect: 'اختر…',
+    genderMale: 'ذكر',
+    genderFemale: 'أنثى',
+    backBtn: 'رجوع',
+    nextBtn: 'التالي',
+    submitBtn: 'إرسال الطلب',
+    summaryTitle: 'يرجى مراجعة معلوماتك',
+    footerNote: 'يتم تخزين معلوماتك بأمان ولا تتم مشاركتها أبدًا.',
+    errFirstName: 'الاسم الأول مطلوب',
+    errFamilyName: 'اسم العائلة مطلوب',
+    errEmail: 'البريد الإلكتروني الصحيح مطلوب',
+    errPhone: 'رقم الهاتف مطلوب',
+    toastRequired: 'يرجى ملء جميع الحقول المطلوبة بشكل صحيح',
+    toastSuccess: 'تم إرسال التسجيل بنجاح! مرحبًا، ',
+    toastError: 'تعذّر حفظ طلبك. يرجى المحاولة مرة أخرى.'
+  }
+};
+</script>
+
+<!-- ===== SLIDESHOW LOGIC ===== -->
+<script>
+(function() {
+  'use strict';
+
+  var slides = document.querySelectorAll('.slide');
+  var dotsContainer = document.getElementById('slideshowDots');
+  var prevBtn = document.getElementById('slidePrev');
+  var nextBtn = document.getElementById('slideNext');
+  var progressBar = document.getElementById('slideshowProgress');
+  var currentIndex = 0;
+  var autoPlayInterval = null;
+  var progressInterval = null;
+  var AUTOPLAY_DELAY = 4000;
+  var progressStart = 0;
+
+  if (!slides.length) return;
+
+  // Build dots dynamically
+  slides.forEach(function(_, i) {
+    var dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    dot.addEventListener('click', function() {
+      goToSlide(i);
+      restartAutoPlay();
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  var dots = dotsContainer.querySelectorAll('.dot');
+
+  function goToSlide(index) {
+    if (index < 0) index = slides.length - 1;
+    if (index >= slides.length) index = 0;
+
+    slides[currentIndex].classList.remove('active');
+    dots[currentIndex].classList.remove('active');
+
+    currentIndex = index;
+
+    slides[currentIndex].classList.add('active');
+    dots[currentIndex].classList.add('active');
+  }
+
+  function nextSlide() { goToSlide(currentIndex + 1); }
+  function prevSlide() { goToSlide(currentIndex - 1); }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    progressStart = Date.now();
+    autoPlayInterval = setInterval(nextSlide, AUTOPLAY_DELAY);
+    progressInterval = setInterval(function() {
+      var elapsed = Date.now() - progressStart;
+      var pct = Math.min((elapsed / AUTOPLAY_DELAY) * 100, 100);
+      if (progressBar) progressBar.style.width = pct + '%';
+    }, 30);
+  }
+
+  function stopAutoPlay() {
+    if (autoPlayInterval) {
+      clearInterval(autoPlayInterval);
+      autoPlayInterval = null;
+    }
+    if (progressInterval) {
+      clearInterval(progressInterval);
+      progressInterval = null;
+    }
+  }
+
+  function restartAutoPlay() {
+    stopAutoPlay();
+    if (progressBar) progressBar.style.width = '0%';
+    startAutoPlay();
+  }
+
+  nextBtn.addEventListener('click', function() {
+    nextSlide();
+    restartAutoPlay();
+  });
+
+  prevBtn.addEventListener('click', function() {
+    prevSlide();
+    restartAutoPlay();
+  });
+
+  // Pause on hover
+  var slideshowCard = document.getElementById('slideshow');
+  slideshowCard.addEventListener('mouseenter', stopAutoPlay);
+  slideshowCard.addEventListener('mouseleave', startAutoPlay);
+
+  // Keyboard navigation (only when slideshow focused)
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') { prevSlide(); restartAutoPlay(); }
+    if (e.key === 'ArrowRight') { nextSlide(); restartAutoPlay(); }
+  });
+
+  // Touch swipe
+  var touchStartX = 0;
+  var touchEndX = 0;
+  slideshowCard.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  slideshowCard.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+      restartAutoPlay();
+    }
+  }, { passive: true });
+
+  startAutoPlay();
+})();
+</script>
+
+<!-- ===== MULTI-STEP FORM + SUPABASE + LANGUAGE ===== -->
+<script>
+(function() {
+  'use strict';
+
+  var form = document.getElementById('signup-form');
+  var backBtn = document.getElementById('backBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var submitBtn = document.getElementById('submitBtn');
+  var toast = document.getElementById('toast');
+  var toastText = document.getElementById('toastText');
+  var preloader = document.getElementById('preloader');
+  var htmlRoot = document.getElementById('html-root');
+  var bodyRoot = document.body;
+  var stepProgress = document.getElementById('stepProgress');
+  var stepItems = document.querySelectorAll('.step-item');
+  var stepPanels = document.querySelectorAll('.step-panel');
+  var totalSteps = 4;
+  var currentStep = 1;
+
+  // ---- Language state ----
+  var currentLang = 'en';
+  var t = window.HSE_TRANSLATIONS;
+
+  function applyLanguage(lang) {
+    currentLang = lang;
+    var dict = t[lang] || t.en;
+
+    htmlRoot.setAttribute('lang', lang);
+    bodyRoot.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    bodyRoot.classList.toggle('lang-ar', lang === 'ar');
+
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) {
+        el.textContent = dict[key];
+      }
+    });
+
+    document.querySelectorAll('.lang-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+
+    try { localStorage.setItem('preferredLang', lang); } catch (e) {}
+    refreshErrorMessages();
+  }
+
+  // ---- Validation ----
+  var fields = [
+    { id: 'firstName',  group: 'groupFirstName',  required: true, msgKey: 'errFirstName'  },
+    { id: 'familyName', group: 'groupFamilyName', required: true, msgKey: 'errFamilyName' },
+    { id: 'email',      group: 'groupEmail',      required: true, msgKey: 'errEmail'      },
+    { id: 'phone',      group: 'groupPhone',      required: true, msgKey: 'errPhone'      }
+  ];
+
+  function refreshErrorMessages() {
+    var dict = t[currentLang] || t.en;
+    fields.forEach(function(f) {
+      var group = document.getElementById(f.group);
+      if (!group) return;
+      var msgSpan = group.querySelector('.error-msg span[data-i18n]');
+      if (msgSpan) {
+        msgSpan.textContent = dict[f.msgKey] || dict.errFirstName;
+      }
+    });
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      applyLanguage(btn.dataset.lang);
+    });
+  });
+
+  try {
+    var saved = localStorage.getItem('preferredLang');
+    if (saved && t[saved]) {
+      applyLanguage(saved);
+    } else {
+      applyLanguage('en');
+    }
+  } catch (e) {
+    applyLanguage('en');
+  }
+
+  // ---- Input → hidden field sync ----
+  document.querySelectorAll('[data-target]').forEach(function(input) {
+    input.addEventListener('input', function() {
+      var targetId = input.getAttribute('data-target');
+      var hidden = document.getElementById(targetId);
+      if (hidden) hidden.value = input.value;
+      // Clear error on input
+      var group = input.closest('.form-group');
+      if (group && input.value.trim() !== '') {
+        group.classList.remove('error');
+      }
+    });
+    // For select, use change event too
+    input.addEventListener('change', function() {
+      var targetId = input.getAttribute('data-target');
+      var hidden = document.getElementById(targetId);
+      if (hidden) hidden.value = input.value;
+      if (input.value.trim() !== '') {
+        var group = input.closest('.form-group');
+        if (group) group.classList.remove('error');
+      }
+    });
+  });
+
+  // ---- Step navigation ----
+  function updateStepUI() {
+    // Panels
+    stepPanels.forEach(function(panel) {
+      panel.classList.toggle('active', parseInt(panel.dataset.step) === currentStep);
+    });
+
+    // Step items
+    stepItems.forEach(function(item) {
+      var step = parseInt(item.dataset.step);
+      item.classList.toggle('active', step === currentStep);
+      item.classList.toggle('completed', step < currentStep);
+
+      // Change check icon for completed
+      var circle = item.querySelector('.step-circle');
+      if (step < currentStep) {
+        circle.innerHTML = '<span class="material-symbols-outlined">check</span>';
+      } else {
+        circle.innerHTML = '<span>' + step + '</span>';
+      }
+    });
+
+    // Progress bar
+    var progressPct = ((currentStep - 1) / (totalSteps - 1)) * 100;
+    if (stepProgress) stepProgress.style.width = progressPct + '%';
+
+    // Buttons
+    backBtn.classList.toggle('hidden', currentStep === 1);
+    nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+    submitBtn.classList.toggle('hidden', currentStep !== totalSteps);
+
+    // Update summary when reaching step 4
+    if (currentStep === 4) {
+      updateSummary();
+    }
+  }
+
+  function updateSummary() {
+    var dict = t[currentLang] || t.en;
+    document.getElementById('summaryFirstName').textContent = document.getElementById('firstName').value || '—';
+    document.getElementById('summaryFamilyName').textContent = document.getElementById('familyName').value || '—';
+    document.getElementById('summaryEmail').textContent = document.getElementById('email').value || '—';
+    document.getElementById('summaryPhone').textContent = document.getElementById('phone').value || '—';
+    document.getElementById('summaryMajor').textContent = document.getElementById('major').value || '—';
+    document.getElementById('summaryLevel').textContent = document.getElementById('level').value || '—';
+    document.getElementById('summaryDob').textContent = document.getElementById('dob').value || '—';
+
+    var genderVal = document.getElementById('gender').value;
+    var genderText = '—';
+    if (genderVal === 'male') genderText = dict.genderMale;
+    else if (genderVal === 'female') genderText = dict.genderFemale;
+    document.getElementById('summaryGender').textContent = genderText;
+  }
+
+  function validateCurrentStep() {
+    var valid = true;
+    var firstInvalid = null;
+
+    if (currentStep === 1) {
+      ['firstName', 'familyName'].forEach(function(id) {
+        var f = fields.find(function(x) { return x.id === id; });
+        if (f && !validateField(f)) {
+          valid = false;
+          if (!firstInvalid) firstInvalid = f.id;
+        }
+      });
+    } else if (currentStep === 2) {
+      ['email', 'phone'].forEach(function(id) {
+        var f = fields.find(function(x) { return x.id === id; });
+        if (f && !validateField(f)) {
+          valid = false;
+          if (!firstInvalid) firstInvalid = f.id;
+        }
+      });
+    }
+
+    if (!valid && firstInvalid) {
+      var dict = t[currentLang] || t.en;
+      showToast(dict.toastRequired, true);
+      var group = document.getElementById('group' + firstInvalid.charAt(0).toUpperCase() + firstInvalid.slice(1));
+      if (group) {
+        group.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+    return valid;
+  }
+
+  function validateField(f) {
+    var hidden = document.getElementById(f.id);
+    var group = document.getElementById(f.group);
+    var value = hidden ? hidden.value.trim() : '';
+    var valid = true;
+
+    if (f.required && value === '') {
+      valid = false;
+    } else if (f.id === 'email' && value !== '') {
+      var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      valid = re.test(value);
+    }
+
+    if (group) group.classList.toggle('error', !valid);
+    return valid;
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (!validateCurrentStep()) return;
+    if (currentStep < totalSteps) {
+      currentStep++;
+      updateStepUI();
+    }
+  });
+
+  backBtn.addEventListener('click', function() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStepUI();
+    }
+  });
+
+  function showToast(message, isError) {
+    if (!toast) return;
+    toastText.textContent = message;
+    var icon = toast.querySelector('.toast-icon');
+    if (icon) {
+      icon.textContent = isError ? 'error' : 'check_circle';
+      icon.style.color = isError ? '#f87171' : '#4ade80';
+    }
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 3500);
+  }
+
+  // ---- SUPABASE SAVE ----
+  function saveToSupabase(payload) {
+    return fetch(window.SUPABASE_URL + '/rest/v1/' + window.SUPABASE_TABLE, {
+      method: 'POST',
+      headers: {
+        'apikey': window.SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + window.SUPABASE_ANON_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(response) {
+      if (!response.ok) {
+        return response.text().then(function(text) {
+          throw new Error('HTTP ' + response.status + ': ' + text);
+        });
+      }
+      return true;
+    });
+  }
+
+  // ---- Final Submit ----
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var dict = t[currentLang] || t.en;
+
+    // Validate all required fields one more time
+    var allValid = true;
+    fields.forEach(function(f) {
+      if (!validateField(f)) allValid = false;
+    });
+
+    if (!allValid) {
+      showToast(dict.toastRequired, true);
+      return;
+    }
+
+    // Build payload — column names match Supabase table
+    var payload = {
+      first_name:  document.getElementById('firstName').value.trim(),
+      family_name: document.getElementById('familyName').value.trim(),
+      email:       document.getElementById('email').value.trim(),
+      phone:       document.getElementById('phone').value.trim(),
+      major:       document.getElementById('major').value.trim() || null,
+      level:       document.getElementById('level').value.trim() || null,
+      dob:         document.getElementById('dob').value || null,
+      gender:      document.getElementById('gender').value || null,
+      lang:        currentLang
+    };
+
+    console.log('📤 Sending application to Supabase:', payload);
+
+    submitBtn.disabled = true;
+    preloader.classList.add('show');
+
+    saveToSupabase(payload)
+      .then(function() {
+        preloader.classList.remove('show');
+        submitBtn.disabled = false;
+        showToast('✅ ' + dict.toastSuccess + payload.first_name + '!');
+        // Reset form
+        form.reset();
+        document.querySelectorAll('[data-target]').forEach(function(inp) {
+          inp.value = '';
+        });
+        document.querySelectorAll('.form-group').forEach(function(g) {
+          g.classList.remove('error');
+        });
+        // Reset to step 1
+        currentStep = 1;
+        updateStepUI();
+        console.log('✅ Application saved to Supabase');
+      })
+      .catch(function(err) {
+        preloader.classList.remove('show');
+        submitBtn.disabled = false;
+        showToast('❌ ' + dict.toastError, true);
+        console.error('❌ Supabase save failed:', err);
+      });
+  });
+
+  // Initialize
+  updateStepUI();
+
+})();
+</script>
+
+</body>
+</html>
